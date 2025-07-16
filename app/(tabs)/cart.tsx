@@ -1,10 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export default function sign_up() {
+const cart = () => {
   return (
     <View>
-      <Text>sign_up</Text>
+      <Text>cart</Text>
     </View>
   )
 }
+
+export default cart

@@ -1,10 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export default function _layout() {
+const profile = () => {
   return (
     <View>
-      <Text>Auth Layout</Text>
+      <Text>profile</Text>
     </View>
   )
 }
+
+export default profile
