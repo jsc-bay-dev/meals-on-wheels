@@ -1,8 +1,16 @@
 import { images } from '@/constants';
+import { CustomButtonProps } from '@/type';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-const CartButton = () => {
+const CartButton = ({
+    onPress,
+    title="Click Me",
+    style,
+    textStyle,
+    leftIcon,
+    isLoading = false
+}: CustomButtonProps) => {
     const totalItems = 10;
     
   return (
