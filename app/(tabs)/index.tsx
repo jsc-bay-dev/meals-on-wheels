@@ -1,10 +1,12 @@
 import CartButton from "@/components/CartButton";
 import { images, offers } from "@/constants";
+import * as Sentry from '@sentry/react-native';
 import cn from 'clsx';
+import { router } from "expo-router";
 import { Fragment } from "react";
-import { FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Button, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import "../../app/globals.css";
+import "../globals.css";
 
 
 export default function Index() {
@@ -46,17 +48,33 @@ export default function Index() {
           )
         }}
         contentContainerClassName="pb-28 px-5"
-        ListHeaderComponent={()=>(
+        ListHeaderComponent={() => (
           <View className="flex-between flex-row w-full my-5 px-5">
-          <View className="flex-start">
-            <Text className="small-bold text-primary">DELIVER TO</Text>
-            <TouchableOpacity className="flex-center flex-row gap-x-1 mt-0.5">
-              <Text className="paragraph-bold text-dark-100">Juno, AL</Text>
-              <Image source={images.arrowDown} className="size-3" resizeMode="contain" />
-            </TouchableOpacity>
+            <View className="flex-start">
+              <Text className="small-bold text-primary">DELIVER TO</Text>
+              <TouchableOpacity className="flex-center flex-row gap-x-1 mt-0.5">
+                <Text className="paragraph-bold text-dark-100">Juno, AL</Text>
+                <Image source={images.arrowDown} className="size-3" resizeMode="contain" />
+              </TouchableOpacity>
+            </View>
+            <CartButton />
           </View>
-          <CartButton/>
-        </View>
+        )}
+        ListFooterComponent={() => (
+          <View style={{ gap: 10 }}>
+            <Button
+              title='Try Sentry!'
+              onPress={() => {
+                Sentry.captureException(new Error('First error'))
+              }}
+            />
+            <Button
+              title='Go to Sign In'
+              onPress={() => {
+                router.push('/(auth)/sign_in')
+              }}
+            />
+          </View>
         )}
       />
     </SafeAreaView>
