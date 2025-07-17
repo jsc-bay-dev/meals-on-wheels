@@ -56,14 +56,16 @@ export const SignIn = async ({ email, password }: SignInParams) => {
 export const getCurrentUser = async () => {
     try {
         const currentAccount = await account.get();
-        if (!currentAccount) throw Error;
+        if (!currentAccount) return null;
         
         const currentUser = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.userCollectionId, [Query.equal('accountId', currentAccount.$id)]);
         
-        if (!currentUser) throw Error;
+        if (!currentUser) return null;
 
         return currentUser.documents[0];
     } catch (error) {
-        throw new Error(error as string)
+        // If user is not authenticated (guest), return null instead of throwing
+        console.log('getCurrentUser: No authenticated user found', error);
+        return null;
     }
 }
