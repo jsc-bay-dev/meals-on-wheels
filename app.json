@@ -45,6 +45,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "77ae6784-1909-426a-98e8-d80a68e38894"
+      }
+    },
+    "owner": "jsc.bay.dev"
   }
 }
