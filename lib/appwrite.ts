@@ -6,7 +6,11 @@ export const appwriteConfig = {
     platform: "com.jsc.mealsonwheels",
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
     databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
-    userCollectionId: '6876ff5b0032570fd232'
+    userCollectionId: '6876ff5b0032570fd232',
+    categoriesCollectionId: '6879ac6c001408e96189',
+    menuCollectionId: '6879ad65002bf7f5ad79',
+    customizationsCollectionId: '6879aee2001d91c490c6',
+    menuCustomizationsCollectionId: '6879afd2000c83ea4daa'
 }
 
 export const client = new Client();
