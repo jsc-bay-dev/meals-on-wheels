@@ -22,7 +22,26 @@ export default function TabLayout() {
   if (!isAuthenticated) return <Redirect href="/sign_in" />;
 
   return (
-    <Tabs>
+    <Tabs screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: {
+                    borderTopLeftRadius: 50,
+                    borderTopRightRadius: 50,
+                    borderBottomLeftRadius: 50,
+                    borderBottomRightRadius: 50,
+                    marginHorizontal: 20,
+                    height: 80,
+                    position: 'absolute',
+                    bottom: 40,
+                    backgroundColor: 'white',
+                    shadowColor: '#1a1a1a',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 5
+                }
+            }}>
       <Tabs.Screen 
         name='index' 
         options={{ 
@@ -30,8 +49,47 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon 
               focused={focused} 
-              icon={images.home} // Replace with your actual icon path
+              icon={images.home} 
               title="Home" 
+            />
+          )
+        }}
+      />
+      <Tabs.Screen 
+        name='search' 
+        options={{ 
+          title: 'Search', 
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              icon={images.search} 
+              title="search" 
+            />
+          )
+        }}
+      />
+      <Tabs.Screen 
+        name='cart' 
+        options={{ 
+          title: 'Cart', 
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              icon={images.bag} 
+              title="Cart" 
+            />
+          )
+        }}
+      />
+      <Tabs.Screen 
+        name='profile' 
+        options={{ 
+          title: 'Profile', 
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              icon={images.person} 
+              title="Profile" 
             />
           )
         }}
