@@ -6,6 +6,7 @@ export const appwriteConfig = {
     platform: "com.jsc.mealsonwheels",
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
     databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
+    bucketId: '6879b0ea00205d865395',
     userCollectionId: '6876ff5b0032570fd232',
     categoriesCollectionId: '6879ac6c001408e96189',
     menuCollectionId: '6879ad65002bf7f5ad79',
