@@ -1,4 +1,4 @@
-import { CreateUserParams, SignInParams } from "@/type";
+import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
@@ -35,9 +35,9 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
             databaseId: appwriteConfig.databaseId,
             userCollectionId: appwriteConfig.userCollectionId
         });
-        
+
         const newAccount = await account.create(ID.unique(), email, password, name)
-        
+
         if (!newAccount) throw Error;
 
 
@@ -70,9 +70,9 @@ export const getCurrentUser = async () => {
     try {
         const currentAccount = await account.get();
         if (!currentAccount) return null;
-        
+
         const currentUser = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.userCollectionId, [Query.equal('accountId', currentAccount.$id)]);
-        
+
         if (!currentUser) return null;
 
         return currentUser.documents[0];
@@ -80,5 +80,37 @@ export const getCurrentUser = async () => {
         // If user is not authenticated (guest), return null instead of throwing
         console.log('getCurrentUser: No authenticated user found', error);
         return null;
+    }
+}
+
+export const getMenu = async ({ category, query }: GetMenuParams) => {
+    try {
+        const queries: string[] = [];
+        if (category) queries.push(Query.equal('categories', category));
+        if (query) queries.push(Query.search('name', query));
+
+        const menus = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.menuCollectionId,
+            queries,
+
+        )
+
+        return menus.documents;
+    } catch (e) {
+        throw new Error(e as string);
+    }
+
+}
+
+export const getCategories = async () => {
+    try {
+        const categories = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.categoriesCollectionId
+        )
+    } catch (e) {
+        throw new Error(e as string);
+
     }
 }
