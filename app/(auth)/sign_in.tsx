@@ -1,6 +1,7 @@
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { SignIn } from '@/lib/appwrite'
+import useAuthStore from '@/store/auth.store'
 import * as Sentry from '@sentry/react-native'
 import { Link, router } from 'expo-router'
 import React, { useState } from 'react'
@@ -9,6 +10,7 @@ import { Alert, Text, View } from 'react-native'
 const sign_in = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' })
+  const { fetchAuthenticatedUser } = useAuthStore()
 
   const submit = async () => {
     if (!form.email || !form.password) return Alert.alert('Error', 'Please enter vald email address & password')
@@ -17,6 +19,8 @@ const sign_in = () => {
 
     try {
       await SignIn({ email: form.email, password: form.password })
+      // Update the auth state after successful sign in
+      await fetchAuthenticatedUser()
       router.replace('/')
     } catch (error: any) {
       Alert.alert('Error', error.message)

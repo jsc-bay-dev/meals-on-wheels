@@ -5,7 +5,7 @@ export const appwriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.jsc.mealsonwheels",
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
-    databaseId: '6876f587001dc956d494',
+    databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
     userCollectionId: '6876ff5b0032570fd232'
 }
 
@@ -23,13 +23,19 @@ export const avatars = new Avatars(client);
 
 export const createUser = async ({ email, password, name }: CreateUserParams) => {
     try {
+        console.log('Creating user with config:', {
+            endpoint: appwriteConfig.endpoint,
+            projectId: appwriteConfig.projectId,
+            databaseId: appwriteConfig.databaseId,
+            userCollectionId: appwriteConfig.userCollectionId
+        });
+        
         const newAccount = await account.create(ID.unique(), email, password, name)
         
         if (!newAccount) throw Error;
 
-        await SignIn({ email, password });
 
-        const avatarUrl = avatars.getInitials(name);
+        const avatarUrl = avatars.getInitialsURL(name);
         const newUser = await databases.createDocument(
             appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
@@ -41,6 +47,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
         )
         return newUser;
     } catch (error) {
+        console.error('Error creating user:', error);
         throw new Error(error as string)
     }
 }
