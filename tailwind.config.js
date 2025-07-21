@@ -19,6 +19,9 @@ module.exports = {
         dark: {
           100: "#181C2E",
         },
+        amber: {
+          500: '#f59e0b',
+        },
         error: "#F14141",
         success: "#2F9B65",
       },
